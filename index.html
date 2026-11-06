@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#070b14">
+<title>HOÀNG HẢI VNTD FF PROXY PANEL</title>
+<style>
+:root{--bg:#070b14;--panel:#101a2a;--cyan:#57eaff;--purple:#a66bff;--pink:#ff63cf;--muted:#91a4bb}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 15% 0,#17254a 0,transparent 38%),radial-gradient(circle at 90% 80%,#281342 0,transparent 35%),var(--bg);color:#eef8ff;font:15px system-ui,-apple-system,Arial;min-height:100vh;padding:18px}
+.wrap{max-width:560px;margin:auto}.brand{text-align:center;padding:16px 8px 20px}.brand small{color:var(--cyan);letter-spacing:4px;font-weight:800}.brand h1{font-size:24px;margin:7px 0;background:linear-gradient(90deg,var(--cyan),#fff,var(--pink));background-clip:text;color:transparent}.brand p{color:var(--muted);margin:0;font-size:12px}
+.card{background:linear-gradient(145deg,#121f32ee,#0b1220ee);border:1px solid #4de7ff55;border-radius:19px;padding:17px;margin:13px 0;box-shadow:0 0 24px #26cfff12}
+h2{font-size:15px;margin:0 0 14px;color:var(--cyan);letter-spacing:1px}.field{margin:11px 0}.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px}
+input,select{width:100%;border:1px solid #38516b;background:#080f1b;color:#fff;border-radius:11px;padding:13px;font-size:15px;outline:none}input:focus,select:focus{border-color:var(--cyan);box-shadow:0 0 0 2px #57eaff20}
+.row{display:flex;gap:10px}.row>*{flex:1;min-width:0}
+button{border:0;border-radius:12px;padding:13px 15px;font-weight:800;color:#06111c;background:linear-gradient(100deg,var(--cyan),#a6f8ff);width:100%;margin-top:8px;cursor:pointer}
+button.secondary{color:#fff;background:#1a2940;border:1px solid #55718f}
+button.purple{color:#fff;background:linear-gradient(100deg,#7546d8,#bd59db)}
+.status{padding:12px;border-radius:11px;background:#081321;border:1px solid #344a64;color:#c7d8e9;font-size:13px;margin-top:12px;line-height:1.5}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.tile{background:#0a1422;border:1px solid #354d68;border-radius:13px;padding:12px}.tile b{display:block;font-size:13px}.tile span{display:block;color:var(--muted);font-size:11px;margin-top:5px}
+.switchrow{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid #26384d}.switchrow:last-child{border:0}.switchrow small{display:block;color:var(--muted);font-size:11px;margin-top:3px}
+.toggle{width:44px;height:25px;appearance:none;background:#33465d;border-radius:30px;position:relative;flex:none;cursor:pointer}.toggle:checked{background:#17b9d2}.toggle:before{content:"";position:absolute;width:19px;height:19px;left:3px;top:3px;border-radius:50%;background:white;transition:.2s}.toggle:checked:before{transform:translateX(19px)}
+.logo{position:fixed;right:16px;bottom:20px;width:62px;height:62px;border-radius:50%;display:grid;place-items:center;text-align:center;font-size:10px;line-height:1.1;color:#06111c;font-weight:1000;background:linear-gradient(135deg,var(--cyan),#b7a0ff,var(--pink));box-shadow:0 0 22px #57eaff88;z-index:9;border:2px solid #fff}
+.menu{position:fixed;right:14px;bottom:94px;width:min(340px,calc(100vw - 28px));z-index:8;display:none;max-height:70vh;overflow:auto;background:#0a1220f5;border:1px solid #57eaff88;border-radius:18px;padding:14px;box-shadow:0 0 35px #8a45ff55;backdrop-filter:blur(14px)}
+.menu.open{display:block}.menuhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.menuhead b{color:var(--cyan)}.close{width:auto;margin:0;padding:7px 11px;background:#293950;color:white}
+.note{font-size:11px;color:#91a4bb;line-height:1.55}.warn{border-color:#ffb45a66;color:#ffdcae}.hidden{display:none}
+footer{text-align:center;color:#71869d;font-size:11px;padding:15px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="brand"><small>HH VNTD • GAMING TOOLS</small><h1>HOÀNG HẢI VNTD</h1><p>FF PROXY & MENU INTERFACE • MOBILE EDITION</p></header>
+
+  <section class="card">
+    <h2>01 / HTTP PROXY PING</h2>
+    <div class="field"><label for="host">PROXY HOST / IP</label><input id="host" value="180.93.125.190" placeholder="Ví dụ: 123.45.67.89" autocomplete="off"></div>
+    <div class="row">
+      <div class="field"><label for="port">PORT</label><input id="port" inputmode="numeric" value="1666" placeholder="8080"></div>
+      <div class="field"><label for="type">TYPE</label><select id="type"><option>HTTP</option><option>HTTPS</option></select></div>
+    </div>
+    <div class="row"><button id="save">LƯU CẤU HÌNH</button><button class="secondary" id="copy">SAO CHÉP</button></div>
+    <div class="status" id="proxyStatus">● Chưa kiểm tra. Nhập Host và Port để lưu cấu hình.</div>
+    <p class="note">Lưu ý: Safari/HTML không thể tự đặt proxy hệ thống hoặc định tuyến riêng Free Fire. Nút lưu chỉ lưu thông tin cấu hình; không xác nhận proxy hoạt động.</p>
+  </section>
+
+  <section class="card">
+    <h2>02 / MENU CONTROL</h2>
+    <div class="grid">
+      <div class="tile"><b>AIMBOT</b><span>Giao diện mẫu • chưa có chức năng</span></div>
+      <div class="tile"><b>ĐỊNH VỊ</b><span>Giao diện mẫu • chưa có chức năng</span></div>
+      <div class="tile"><b>FOV COLOR</b><span>Chỉnh màu vùng hiển thị mẫu</span></div>
+      <div class="tile"><b>CROSSHAIR</b><span>Tâm ngắm luyện tập trong trang</span></div>
+    </div>
+    <div class="field"><label for="fovColor">MÀU FOV PREVIEW</label><input id="fovColor" type="color" value="#57eaff" style="height:48px;padding:5px"></div>
+    <div class="field"><label for="fovSize">KÍCH THƯỚC FOV PREVIEW</label><input id="fovSize" type="range" min="40" max="240" value="120"></div>
+    <div class="status" style="text-align:center"><div id="fovPreview" style="width:120px;height:120px;border:2px solid #57eaff;border-radius:50%;margin:4px auto;display:grid;place-items:center;color:#fff">FOV</div><span class="note">Vùng xem trước trong trang, không hiển thị đè lên Free Fire.</span></div>
+  </section>
+
+  <section class="card">
+    <h2>03 / QUICK SETTINGS</h2>
+    <div class="switchrow"><div><b>Hiệu ứng neon</b><small>Bật/tắt hiệu ứng giao diện</small></div><input class="toggle" type="checkbox" checked id="neon"></div>
+    <div class="switchrow"><div><b>Hiện tâm ngắm mẫu</b><small>Chỉ hiển thị trong trang này</small></div><input class="toggle" type="checkbox" id="cross"></div>
+    <div id="crossPreview" class="status hidden" style="text-align:center;font-size:26px;color:var(--cyan)">＋</div>
+  </section>
+
+
+  <section class="card">
+    <h2>04 / CA CERTIFICATE</h2>
+    <div class="status">
+      <b>VINAKCHEAT CA • SHA-256</b><br>
+      <span style="overflow-wrap:anywhere;font-family:monospace;font-size:11px">DA99F0E7BF17DC961A655DA4D83C1D517F349CF1E11C30E763A883960E245DDF</span>
+    </div>
+    <div class="row">
+      <button type="button" id="downloadProfile">TẢI MOBILECONFIG</button>
+      <button type="button" class="secondary" id="downloadCert">TẢI CHỨNG CHỈ .CER</button>
+    </div>
+    <p class="note">Hai nút mở tệp từ máy chủ bạn cung cấp. Chưa tự cài chứng chỉ hoặc hồ sơ. Hãy xác minh nhà phát hành và dấu vân tay qua một kênh độc lập trước khi cài hoặc bật tin cậy CA.</p>
+  </section>
+
+  <section class="card warn">
+    <b>GIỚI HẠN TRÊN IPHONE</b>
+    <p class="note" style="color:#ffdcae">Trang web này là bản giao diện độc lập. iOS không cho Safari tự tạo logo nổi trên Free Fire hoặc tự điều khiển lưu lượng mạng của riêng game. Muốn có overlay thật cần ứng dụng iOS và quyền hệ thống phù hợp. Các mục AIMBOT/ĐỊNH VỊ hiện chỉ là ô giao diện trống.</p>
+  </section>
+  <footer>HOÀNG HẢI VNTD • PROTOTYPE UI</footer>
+</div>
+
+<button class="logo" id="logo" aria-label="Mở menu">HH<br>VNTD</button>
+<div class="menu" id="menu">
+  <div class="menuhead"><b>HOÀNG HẢI VNTD MENU</b><button class="close" id="close">✕</button></div>
+  <div class="switchrow"><div><b>AIMBOT</b><small>Ô giao diện trống</small></div><input class="toggle" type="checkbox" disabled></div>
+  <div class="switchrow"><div><b>ĐỊNH VỊ</b><small>Ô giao diện trống</small></div><input class="toggle" type="checkbox" disabled></div>
+  <div class="switchrow"><div><b>FOV PREVIEW</b><small>Xem trước màu/kích thước</small></div><input class="toggle" type="checkbox" id="fovToggle" checked></div>
+  <div class="switchrow"><div><b>CROSSHAIR PREVIEW</b><small>Tâm ngắm trong trang</small></div><input class="toggle" type="checkbox" id="crossToggle"></div>
+  <button class="purple" id="proxyJump">MỞ PROXY PING</button>
+  <p class="note">Menu chỉ nổi trên trang prototype, không nổi trên ứng dụng Free Fire.</p>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+function load(){try{const c=JSON.parse(localStorage.getItem('hhvntd_proxy')||'{}');$('host').value=c.host||'180.93.125.190';$('port').value=c.port||'1666';$('type').value=c.type||'HTTP'}catch(e){}}
+$('save').onclick=()=>{const host=$('host').value.trim(),port=$('port').value.trim();if(!host||!port||!/^\d+$/.test(port)||+port<1||+port>65535){$('proxyStatus').textContent='⚠ Vui lòng nhập Host và Port hợp lệ (1–65535).';return}localStorage.setItem('hhvntd_proxy',JSON.stringify({host,port,type:$('type').value}));$('proxyStatus').textContent='✓ Đã lưu cấu hình '+$('type').value+' • '+host+':'+port+'. Chưa kết nối proxy.'};
+$('copy').onclick=async()=>{const s=$('type').value+'://'+$('host').value.trim()+':'+$('port').value.trim();try{await navigator.clipboard.writeText(s);$('proxyStatus').textContent='✓ Đã sao chép: '+s}catch(e){$('proxyStatus').textContent='Không thể tự sao chép. Cấu hình: '+s}};
+$('logo').onclick=()=>$('menu').classList.toggle('open');$('close').onclick=()=>$('menu').classList.remove('open');
+$('proxyJump').onclick=()=>{ $('menu').classList.remove('open');$('host').scrollIntoView({behavior:'smooth',block:'center'}) };
+function updateFov(){const n=+$('fovSize').value;$('fovPreview').style.width=n+'px';$('fovPreview').style.height=n+'px';$('fovPreview').style.borderColor=$('fovColor').value;$('fovPreview').style.color=$('fovColor').value}
+$('fovColor').oninput=updateFov;$('fovSize').oninput=updateFov;
+$('cross').onchange=()=> $('crossPreview').classList.toggle('hidden',!$('cross').checked);
+$('crossToggle').onchange=()=>{$('cross').checked=$('crossToggle').checked;$('cross').dispatchEvent(new Event('change'))};
+$('fovToggle').onchange=()=>{$('fovPreview').style.visibility=$('fovToggle').checked?'visible':'hidden'};
+$('neon').onchange=()=>document.querySelectorAll('.card').forEach(c=>c.style.boxShadow=$('neon').checked?'0 0 24px #26cfff12':'none');
+
+$('downloadProfile').onclick=()=>window.open('https://180-93-125-190.sslip.io/vinakcheat/VINAKCHEAT.mobileconfig','_blank','noopener');
+$('downloadCert').onclick=()=>window.open('https://180-93-125-190.sslip.io/vinakcheat/VINAKCHEAT.cer','_blank','noopener');
+
+load();updateFov();
+</script>
+</body>
+</html>
